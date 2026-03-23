@@ -1,0 +1,150 @@
+/* styles.css — v10: Animaciones de fundido + fixes anteriores */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+:root{ --rosa:#ffe6eb; --vino:#5c2a2a; --vino-osc:#4a1f1f; --blanco:#fff }
+*{ box-sizing:border-box }
+html,body{ height:100%; margin:0 }
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--rosa),var(--blanco));
+  color:var(--vino);
+  font-family:'Crimson Text',serif;
+  display:block;
+  overflow-y:auto;
+}
+
+/* ---------- Velo para fundidos ---------- */
+#veil{
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity .6s ease;
+  z-index: 9999;
+}
+#veil.hidden{ opacity: 0; }
+
+/* Respetar usuarios con reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #veil{ transition: none; opacity: 0 !important; }
+}
+
+.wrap{ width:100%; max-width:960px; padding:24px; margin:0 auto }
+.card{
+  background:rgba(255,255,255,.75);
+  backdrop-filter: blur(8px);
+  border-radius:24px;
+  box-shadow:0 16px 40px rgba(0,0,0,.1);
+  padding:32px 28px;
+  margin:0 auto;
+  text-align:center;
+}
+
+/* Intro visible por defecto */
+.intro{
+  min-height:100svh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:24px;
+  animation:fade .6s ease both;
+}
+.intro h1{ font-family:'Dancing Script',cursive; font-size:clamp(2.2rem,6vw,3.6rem); margin:0 0 12px }
+.intro p{ margin:0 0 24px; font-size:1.15rem; opacity:.9 }
+.btn{
+  cursor:pointer; padding:14px 28px; border:none; border-radius:999px;
+  background:linear-gradient(135deg,var(--vino),var(--vino-osc));
+  color:#fff; font-weight:700; font-size:1.05rem; text-decoration:none;
+  box-shadow:0 8px 20px rgba(92,42,42,.25);
+}
+
+/* Poema oculto inicialmente; se muestra con .show */
+.poema-view{ display:none; opacity:0; transform:translateY(8px) }
+.poema-view.show{ display:block; opacity:1; transform:none; transition:opacity .45s ease, transform .45s ease }
+.heading{ font-family:'Dancing Script',cursive; font-size:clamp(2rem,5vw,3rem); margin:0 0 8px }
+.dedicatoria{ margin:0 0 20px; opacity:.8 }
+
+/* ---------- TOPBAR RESPONSIVO ---------- */
+.topbar{
+  display:grid;
+  grid-template-columns: 1fr auto; /* chip a la izq, controles a la der */
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+.chip{
+  background:rgba(255,255,255,.85);
+  padding:6px 12px;
+  border-radius:999px;
+  justify-self:start;
+  max-width:100%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.controls{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  min-width:0;
+  width:100%;
+}
+.icon-btn{
+  border:none; background:rgba(255,255,255,.9);
+  padding:8px 12px; border-radius:999px; cursor:pointer;
+  font-weight:600; font-size:.95rem;
+  flex:0 0 auto;
+}
+.vol{
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.9);
+  padding:6px 10px;
+  border-radius:999px;
+  flex: 1 1 260px;
+  min-width: 140px;
+  max-width: 100%;
+}
+.vol input[type=range]{ width:100%; accent-color: var(--vino); min-width:0; }
+.vol .pct{ min-width:34px; text-align:right }
+
+@media (max-width: 560px){
+  .topbar{ grid-template-columns: 1fr; gap:10px; }
+  .chip{ justify-self:center; }
+  .controls{ justify-content:stretch; }
+  .icon-btn{ padding:6px 10px; font-size:.9rem; }
+  .vol{ gap:6px; padding:6px 8px; flex:1 1 auto; min-width:0; }
+  .vol .pct{ min-width:30px; font-size:.9rem; }
+}
+@media (max-width: 400px){
+  .vol span:first-child{ display:none; }
+}
+
+/* ---------- POEMA: ajuste uniforme + párrafos ---------- */
+.poema{
+  font-size: clamp(0.95rem, 3.9vw, 1.25rem); /* máximo por viewport */
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  content-visibility: auto;
+  contain-intrinsic-size: 800px 1200px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.poema .poem-line{
+  display:block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  will-change: font-size;
+  font-size: 1em;      /* igual que el contenedor; JS reducirá UNIFORMEMENTE si hace falta */
+  line-height: 1.25;
+  margin: 0.15em 0;
+}
+.poema .para-gap{ height: 0.9em; content: "" }
+
+@keyframes fade{ from{ opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }

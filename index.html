@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>El Mar del Tiempo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Preload de audio (opcional) -->
+  <link rel="preload" as="audio" href="musica/uwaie.mp3" type="audio/mpeg">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css?v=10">
+  <style>html, body { overflow-anchor: none; }</style>
+</head>
+<body>
+  <!-- Velo para animaciones de fundido -->
+  <div id="veil" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <!-- Intro -->
+    <section id="intro" class="card intro">
+      <h1>El sabor de la vida 🌷</h1>
+      <p>Con cariño para Ana.</p>
+      <button id="btnLeer" class="btn" type="button" role="button">📖 Leer</button>
+    </section>
+
+    <!-- Poema -->
+    <section id="poemaView" class="card poema-view" aria-hidden="true">
+      <div class="topbar">
+        <div class="chip">20 de Septiembre de 2025</div>
+        <div class="controls">
+          <button id="btnAudio" class="icon-btn" type="button">🔊 Sonido</button>
+          <label class="vol">
+            <span>Volumen</span>
+            <input id="vol" type="range" min="0" max="1" step="0.01" value="0.30">
+            <span id="volPct" class="pct">30%</span>
+          </label>
+        </div>
+      </div>
+      <h2 class="heading">Capítulo I</h2>
+      <p class="dedicatoria">El sabor de la vida</p>
+      <div class="poema" id="poemaTexto" aria-live="polite" aria-busy="true">Cargando poema…</div>
+    </section>
+
+    <!-- Audio -->
+    <audio id="bgm" preload="auto" loop>
+      <source src="musica/uwaie.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- JS -->
+  <script src="app.js?v=10" defer></script>
+</body>
+</html>
